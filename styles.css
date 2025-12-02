@@ -1,0 +1,750 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #1c1a26;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+header,
+section,
+footer,
+.service,
+.contact input,
+.contact textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Navbar (fixed, no scroll effect) */
+header {
+  background: #00434b; /* default dark navbar */
+  color: white;
+  padding: 15px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-img {
+  width: 100px;
+  height: auto;
+}
+
+/* Right side container (theme toggle + hamburger) */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Navbar links */
+header ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+header ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header ul li a:hover,
+header ul li a.active {
+  background-color: #0088cc;
+  color: white;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.3s;
+}
+
+.theme-toggle:hover {
+  color: #0088cc;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-padding {
+  padding: 4rem 0;
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: #00434b;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #0088cc;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #006da5;
+  transform: translateY(-2px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bg-light {
+  background-color: #f4f4f4;
+}
+
+/* --- Hero Section (Image Background Update) --- */
+.hero {
+  /* BACKGROUND IS NOW CONTROLLED BY THE NEW SLIDESHOW DIVS */
+  padding: 8rem 1rem; /* Increased padding */
+  position: relative;
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Hide overflowing parts of images during transition */
+  min-height: 100vh; /* Make sure hero takes full viewport height */
+  /* Remove any previous background-image/animation properties here */
+}
+
+/* --- NEW SMOOTH SLIDESHOW STYLES --- */
+.hero-slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind the content and overlay */
+}
+
+.slide-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0; /* Start hidden */
+    animation: imageFade 25s infinite; /* 5s per image x 5 images = 25s total cycle */
+}
+
+/* Set animation delays for each slide layer */
+/* (25s total cycle / 5 images = 5s per image) */
+.slide-layer:nth-child(1) { animation-delay: 0s; }
+.slide-layer:nth-child(2) { animation-delay: 5s; }
+.slide-layer:nth-child(3) { animation-delay: 10s; }
+.slide-layer:nth-child(4) { animation-delay: 15s; }
+.slide-layer:nth-child(5) { animation-delay: 20s; }
+.slide-layer:nth-child(6), .slide-layer:nth-child(7), .slide-layer:nth-child(8), .slide-layer:nth-child(9), .slide-layer:nth-child(10) { 
+  /* Hiding extra layers to ensure smooth 5-layer loop */
+  display: none; 
+}
+
+
+/* Keyframe Animation: Fade in, hold, fade out */
+@keyframes imageFade {
+    /* 20% of 25s = 5s per image cycle: */
+    /* Fade in over 1s (4%) */
+    0% { opacity: 0; }
+    4% { opacity: 1; } 
+    /* Hold for 3s (12%) */
+    20% { opacity: 1; }
+    /* Fade out over 1s (4%) */
+    24% { opacity: 0; } 
+    /* Stay faded out for the rest of the cycle (76%) */
+    100% { opacity: 0; }
+}
+
+/* Hero Overlay (Must be z-index 1, between slides and content) */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  z-index: 1; /* Make sure this is above the slideshow layers (z-index 0) */
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* Must be highest to appear over overlay */
+  max-width: 1000px;
+  margin: 0 auto;
+}
+/* --- END NEW SLIDESHOW STYLES --- */
+
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+
+/* Service Grid */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* --- PROFESSIONAL CARD STYLING AND HOVER EFFECT --- */
+.service {
+  padding: 2rem;
+  background-color: #f9f9f9; 
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Subtle initial shadow */
+  text-align: center;
+  /* Smooth transition for the lift and shadow effects */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease; 
+}
+
+.service:hover {
+  transform: translateY(-8px); /* The "lift" effect */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow on hover */
+}
+
+/* Service icons */
+.service i {
+  font-size: 3.5rem; /* Slightly larger icons for presence */
+  color: #0088cc;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+}
+
+.service:hover i {
+    color: #006da5; /* Change color on hover */
+}
+
+.service h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #00434b;
+}
+
+/* --- About Section Grid and Text Styling --- */
+.about-grid {
+    /* Changed from 1fr 1fr to 1fr so the text takes up the full width */
+    grid-template-columns: 1fr; 
+    gap: 3rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 3rem auto;
+    display: grid; /* Ensure it stays a grid to manage gap/padding if needed */
+}
+
+.about-text-content {
+    /* Ensures text columns are nicely formatted */
+}
+
+/* --- PROFESSIONAL FONT STYLES FOR ABOUT TEXT --- */
+.about-text-content p {
+    /* Font stack prioritizing system fonts (Segoe UI, Roboto, Helvetica Neue, Arial) for a modern, clean, and professional look */
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1.05rem; /* Slightly larger for readability */
+    line-height: 1.8; /* Increased line spacing for better flow */
+    margin-bottom: 1rem;
+    color: #000000; /* Darker text for contrast */
+}
+
+body.dark-mode .about-text-content p {
+    color: #ccc; /* Lighter text in dark mode */
+}
+/* --------------------------------------------------- */
+
+
+/* About Section */
+.about-content {
+  margin-bottom: 2rem;
+  text-align: left; /* Aligned left inside its column */
+}
+
+/* The style below is now controlled by the more specific .about-text-content p */
+.about-content p {
+    margin-bottom: 1rem;
+}
+
+.testimonials {
+    text-align: center;
+    padding: 2rem;
+}
+
+.testimonials h3 {
+    margin-bottom: 1.5rem;
+    color: #00434b;
+}
+
+body.dark-mode .testimonials h3 {
+    color: #f4f4f4;
+}
+
+/* ------------------------------------------------------------------ */
+/* --- UPDATED RATING DISPLAY STYLES (Single Box with Two Sections) --- */
+/* ------------------------------------------------------------------ */
+
+.rating-container {
+    /* Fixed width to match a typical rating widget */
+    max-width: 400px; 
+    margin: 0 auto 3rem;
+    border-radius: 8px;
+    overflow: hidden; /* Important for containing the two sections */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-mode .rating-container {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Individual Rating Sections */
+.rating-section {
+    display: block; /* Make the anchor tag fill the space */
+    text-decoration: none;
+    padding: 2rem 1rem;
+    text-align: center;
+    color: inherit;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.rating-section:hover {
+    transform: translateY(-2px);
+}
+
+/* Google Section (Top Part) */
+.google-rating {
+    background-color: #f7f3ed; /* Light beige background from your image */
+    color: #1c1a26;
+}
+
+body.dark-mode .google-rating {
+    background-color: #2a2a2a; /* Dark background */
+    color: #f4f4f4;
+}
+
+.google-rating:hover {
+    background-color: #ede9e1; /* Slightly darker on hover */
+}
+
+body.dark-mode .google-rating:hover {
+    background-color: #383838; 
+}
+
+.google-rating .logo {
+    width: 50px; /* Google logo size */
+    height: auto;
+    margin-bottom: 5px;
+}
+
+.google-rating .stars {
+    color: #fbbc05; /* Google Star Yellow */
+    font-size: 1.5rem;
+    margin-bottom: 5px; /* Reduced margin to bring score closer */
+}
+
+.google-rating .score {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1c1a26; /* Dark text color */
+    margin-bottom: 10px;
+}
+body.dark-mode .google-rating .score {
+    color: #f4f4f4; /* Light text color in dark mode */
+}
+
+.google-rating .description {
+    font-size: 1.05rem;
+    color: #4a4a4a;
+    line-height: 1.3;
+}
+
+body.dark-mode .google-rating .description {
+    color: #ccc;
+}
+
+
+/* Trustpilot Section (Bottom Part) */
+.trustpilot-rating {
+    background-color: white;
+    color: #1c1a26;
+    border-top: 1px solid #eee; /* Subtle separator */
+}
+
+body.dark-mode .trustpilot-rating {
+    background-color: #1a1a1a;
+    color: #f4f4f4;
+    border-top: 1px solid #444;
+}
+
+.trustpilot-rating:hover {
+    background-color: #f9f9f9; 
+}
+
+body.dark-mode .trustpilot-rating:hover {
+    background-color: #2a2a2a; 
+}
+
+.trustpilot-rating .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.trustpilot-rating .score {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.trustpilot-rating .stars {
+    color: #00b67a; /* Trustpilot Green */
+    font-size: 2rem; 
+    margin-bottom: 15px;
+}
+
+.trustpilot-rating .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+.trustpilot-rating .info span {
+    font-weight: bold;
+    color: #000000;
+}
+
+body.dark-mode .trustpilot-rating .info span {
+    color: #f4f4f4;
+}
+
+.trustpilot-rating .logo-small {
+    width: 20px;
+    height: auto;
+}
+
+/* Hiding old buttons to keep the file clean */
+.review-buttons-container {
+    display: none; 
+}
+
+/* ------------------------------------------------------------------ */
+
+
+/* Contact Form */
+#kontakt form {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#kontakt input,
+#kontakt textarea {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#kontakt input:focus,
+#kontakt textarea:focus {
+  border-color: #0088cc;
+  box-shadow: 0 0 5px rgba(0, 136, 204, 0.5);
+  outline: none;
+}
+
+#kontakt button {
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Footer */
+footer {
+  background: #00434b;
+  color: white;
+  padding: 2rem 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.footer-content h3 {
+  margin-bottom: 1rem;
+  color: #0088cc;
+}
+
+.footer-content ul {
+  list-style: none;
+}
+
+.footer-content ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.5rem;
+  transition: color 0.3s;
+}
+
+.footer-content ul li a:hover {
+  color: #0088cc;
+}
+
+.social-icons a {
+  color: white;
+  margin-right: 15px;
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: #0088cc;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #005a63;
+}
+
+/* WhatsApp floating button */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  color: #000000;
+  padding: 0.8rem 1rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+  z-index: 1001;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1); /* Slightly more prominent scale */
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); /* Green glow effect */
+}
+
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #f4f4f4;
+}
+
+body.dark-mode h2 {
+    color: #00aaff;
+}
+
+body.dark-mode header {
+    background: #002e33;
+}
+
+body.dark-mode header ul li a:hover,
+body.dark-mode header ul li a.active {
+    background-color: #00aaff;
+}
+
+body.dark-mode .hero {
+    /* Background is now controlled by the slideshow, keeping this area clean */
+}
+
+body.dark-mode .hero::before {
+    background-color: rgba(0, 0, 0, 0.65); /* Made slightly darker for better contrast with slideshow */
+}
+
+body.dark-mode .hero-content h1 {
+    color: white;
+}
+
+body.dark-mode .testimonials h3 {
+    color: #f4f4f4;
+}
+
+body.dark-mode .btn-primary {
+    background-color: #00aaff;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #0088cc;
+}
+
+body.dark-mode .bg-light {
+  background-color: #222222;
+}
+
+/* Dark Mode Professionalism for Cards */
+body.dark-mode .service {
+  background-color: #2a2a2a; /* Darker background for the card */
+  color: #e0e0e0;
+  border-color: #3a3a3a;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .service:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .service i {
+    color: #00aaff;
+}
+body.dark-mode .service h3 {
+    color: #f4f4f4;
+}
+
+body.dark-mode #kontakt input,
+body.dark-mode #kontakt textarea {
+    background-color: #333;
+    border-color: #444;
+    color: #f4f4f4;
+}
+
+body.dark-mode #kontakt input:focus,
+body.dark-mode #kontakt textarea:focus {
+    border-color: #00aaff;
+    box-shadow: 0 0 5px rgba(0, 170, 255, 0.5);
+}
+
+body.dark-mode footer {
+    background: #002e33;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  /* About Grid Stacking */
+    .about-grid {
+        grid-template-columns: 1fr; /* Text already takes full width, no change needed here */
+        gap: 2rem;
+    }
+    
+    .hero {
+        padding: 5rem 1rem; /* Reduce padding slightly for mobile */
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+  /* Mobile Menu */
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #00434b; /* Match header color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
+  .nav-menu ul li a {
+    display: block;
+    padding: 15px 20px;
+    border-bottom: 1px solid #005a63;
+  }
+
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  /* Adjust theme toggle on mobile */
+  .theme-toggle {
+    order: -1; /* Place it before the hamburger icon */
+  }
+
+  .nav-container {
+    padding: 10px 20px;
+  }
+
+  /* Dark mode mobile menu */
+  body.dark-mode .nav-menu {
+    background-color: #002e33;
+  }
+
+  body.dark-mode .nav-menu ul li a {
+    border-bottom: 1px solid #004d55;
+  }
+}
+
+/* Hide hamburger on desktop */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+}

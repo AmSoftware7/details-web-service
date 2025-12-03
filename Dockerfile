@@ -1,22 +1,20 @@
+# 1️⃣ استخدم Node.js رسمي
 FROM node:18-alpine
 
-# مجلد العمل داخل الكونتينر
-WORKDIR /usr/src/app
+# 2️⃣ مجلد العمل داخل الكونتينر
+WORKDIR /app
 
-# نسخ ملفات الباكدج
+# 3️⃣ نسخ ملفات البكجات فقط (لتسريع build)
 COPY package*.json ./
 
-# تثبيت البكجات
+# 4️⃣ تثبيت dependencies
 RUN npm install
 
-# نسخ باقي المشروع
+# 5️⃣ نسخ باقي الملفات (HTML – CSS – JS – server.js – images)
 COPY . .
 
-# متغير البيئة (اختياري)
-ENV NODE_ENV=production
-
-# البورت اللي يسمعه السيرفر
+# 6️⃣ البورت اللي السيرفر يسمع عليه
 EXPOSE 3000
 
-# أمر التشغيل
+# 7️⃣ أمر التشغيل الأساسي
 CMD ["npm", "start"]
